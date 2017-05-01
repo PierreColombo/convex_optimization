@@ -21,12 +21,12 @@ A = diag(d)+t+t.'; % Put them together in a symmetric matrix
 %%%% min loss(A,exp(X))                %%%%%
 %%%% st X symetric definite positive   %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-number_of_projections = 0;
-while epsilon > accuracy
+number_of_projections = 0; % number of projections ( O(1/accuracy^2) )
+while epsilon > accuracy  
     gradient = compute_KL_gradient(A,X);
     X = X - stepSize * gradient;
-    X = find_closest_symetric_matrix(X); % projection of the solution on the cone of definite symetric matrix
+    X = find_closest_symetric_matrix(X);
     epsilon = norm(exp(X)-A,'fro');
-    number_of_projections =number_of_projections +1;
+    number_of_projections = number_of_projections +1;
 end
     
