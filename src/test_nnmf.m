@@ -1,5 +1,5 @@
-% Test Script For Matrix Factorisation : This script factor a matrix A
-% of size N*N into a product of two matrices U.V of size N*k and k*N
+%%%%%% Test Script For Matrix Factorisation : This script factor a matrix A
+%%%%%%% of size N*N into a product of two matrices U.V of size N*k and k*N
 
 % Constant
 N = 10; % Size of the matrix

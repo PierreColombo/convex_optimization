@@ -3,22 +3,22 @@
 
 % Constant
 N = 2; % Size of the matrix
-accuracy = 0.01; % accuracy you would like to reach
-stepSize = accuracy; % for the gradient descent
+accuracy = 10e-100; % accuracy you would like to reach
+stepSize = 0.1; % for the gradient descent
 epsilon = accuracy + 1;
 
+
 % Initialization
-X = zeros(N,N);
+X = ones(N,N);
 
 % Generate a symetric matrix to factor
-d = 10*rand(N,1); % The diagonal values
+d = rand(N,1); % The diagonal values
 t = triu(bsxfun(@min,d,d.').*rand(N),1); % The upper trianglar random values
-A = diag(d)+t+t.'; % Put them together in a symmetric matrix
+A = diag(d)+t+t.';  %Put them together in a symmetric matrix
 
 stringA = 'matrix A';
 disp(stringA)
 disp(A);
-
 
 % Compute X :
 
@@ -30,16 +30,21 @@ disp(A);
 number_of_projections = 0; % number of projections ( O(1/accuracy^2) )
 while epsilon > accuracy  
     gradient = compute_KL_gradient(A,X);
-    X = X - stepSize* gradient;
-    X = find_closest_symetric_matrix(X);
-    epsilon = norm(gradient,'fro');
+    X_old = X;
+    X = X - stepSize* gradient;   
+    epsilon = norm(X_old-X,'fro');
     number_of_projections = number_of_projections +1;
     
     stringIteration = 'number of iterations';
     disp(stringIteration);
     disp(number_of_projections);
-
+    disp('Epsilon');
+    disp(epsilon);
+    X = find_closest_symetric_matrix(X);
+   
 end
+ 
+
 
 % compute exp_H(X)
  
@@ -69,4 +74,8 @@ disp(stringEstim);
 
 disp(A)
 disp(estim)
+
+
+disp('Norm of the difference : ')
+disp(norm(A-estim,'fro'));
     

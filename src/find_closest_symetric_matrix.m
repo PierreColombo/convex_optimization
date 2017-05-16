@@ -1,4 +1,4 @@
-function [B] = find_closest_symetric_matrix(A)
+function [C] = find_closest_symetric_matrix(A)
 % This function takes as an imput the matrix A
 % It returns the projection of A on the cone of definite positiv matrix
 % 
@@ -10,9 +10,10 @@ function [B] = find_closest_symetric_matrix(A)
     n = size(A,1);
     cvx_begin sdp
         variable B(n,n)
-        minimize(norm(A-B,'fro')) % minimize the Frobenius Distance
+        minimize(norm(A- B - B','fro')) % minimize the Frobenius Distance
         subject to
-                B+B' >= 0
+                B + B' >= 0
     cvx_end
+    C =  B + B'; 
 end
 
