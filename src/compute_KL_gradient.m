@@ -10,7 +10,6 @@ function [grad] = compute_KL_gradient(A,X)
 % "grad" :  matrix n*n the gradient following x
 
     grad = - A + exp(X);
-
 end
 
 
